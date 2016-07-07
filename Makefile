@@ -86,7 +86,7 @@ build/behave/.grpc-dummy:
 	touch build/behave/.grpc-dummy
 
 behave-grpc: build/behave/.grpc-dummy
-	
+
 
 behave-deps: images peer behave-grpc
 behave: behave-deps
@@ -100,7 +100,6 @@ linter: gotools
 	@echo "Running go vet"
 	go vet ./consensus/...
 	go vet ./core/...
-	go vet ./discovery/...
 	go vet ./events/...
 	go vet ./examples/...
 	go vet ./membersrvc/...
@@ -216,7 +215,7 @@ base-image-clean:
 images-clean: $(patsubst %,%-image-clean, $(IMAGES))
 
 .PHONY: node-sdk
-node-sdk:
+node-sdk: peer membersrvc
 	cp ./protos/*.proto ./sdk/node/lib/protos
 	cp ./membersrvc/protos/*.proto ./sdk/node/lib/protos
 	cd ./sdk/node && sudo apt-get install npm && npm install && sudo npm install -g typescript && sudo npm install typings --global && typings install
